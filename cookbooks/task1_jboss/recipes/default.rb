@@ -49,7 +49,7 @@ systemd_unit 'jboss.service' do
   User=web
   Group=web
   Type=forking
-  ExecStart=/bin/bash -c '/opt/wildfly/bin/domain.sh'
+  ExecStart=/bin/bash -c '/opt/wildfly/bin/standalone.sh -b 192.168.10.3'
 
   [Install]
   WantedBy=multi-user.target
