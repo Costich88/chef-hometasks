@@ -1,0 +1,8 @@
+server {
+    listen *:<%= @nginx_port -%>;
+    server_name  wildflyback.eu;
+
+	location / {
+        proxy_pass http://<%= @jboss_ip -%>:<%= @jboss_port -%>/<%= @jboss_app -%>/;
+        }
+}

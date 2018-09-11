@@ -1,0 +1,70 @@
+Starting Chef Client, version 14.4.56[0m
+resolving cookbooks for run list: ["task1_jboss"][0m
+Synchronizing Cookbooks:[0m
+  - task1_jboss (0.1.0)[0m
+Installing Cookbook Gems:[0m
+Compiling Cookbooks...[0m
+Converging 10 resources[0m
+Recipe: task1_jboss::default[0m
+  * yum_package[java-1.8.0-openjdk] action install
+    [32m- install version 1:1.8.0.181-3.b13.el7_5.x86_64 of package java-1.8.0-openjdk[0m
+[0m  * yum_package[unzip] action install (up to date)
+  * linux_user[web] action create
+    [32m- create user web[0m
+[0m  * group[web] action create
+    [32m- alter group web[0m
+    [32m- replace group members with new list of members[0m
+[0m  * remote_file[/opt/jboss.zip] action create
+    [32m- create new file /opt/jboss.zip[0m
+    [32m- update content in file /opt/jboss.zip from none to 9439e4[0m
+    [37m(file sizes exceed 10000000 bytes, diff output suppressed)[0m
+    [32m- change mode from '' to '0755'[0m
+    [32m- change owner from '' to 'web'[0m
+    [32m- change group from '' to 'web'[0m
+[0m  * execute[jboss_extract] action run
+    [32m- execute unzip -o jboss.zip[0m
+[0m  * execute[jboss_install_path] action run
+    [32m- execute mv /opt/wildfly-14.0.1.Final /opt/wildfly/[0m
+[0m  * execute[change_jboss_own] action run
+    [32m- execute chown -R web:web /opt/wildfly/[0m
+[0m  * systemd_unit[jboss.service] action create
+  Recipe: <Dynamically Defined Resource>[0m
+    * file[/etc/systemd/system/jboss.service] action create
+      [32m- create new file /etc/systemd/system/jboss.service[0m
+      [32m- update content in file /etc/systemd/system/jboss.service from none to 2302ca[0m
+      [37m--- /etc/systemd/system/jboss.service	2018-09-11 22:32:59.153644927 +0000[0m
+      [37m+++ /etc/systemd/system/.chef-jboss20180911-12417-c6g8eq.service	2018-09-11 22:32:58.640634592 +0000[0m
+      [37m@@ -1 +1,14 @@[0m
+      [37m+  [Unit][0m
+      [37m+  Description=WildFly application server[0m
+      [37m+  After=network.target[0m
+      [37m+[0m
+      [37m+  [Service][0m
+      [37m+  Type=simple[0m
+      [37m+  User=web[0m
+      [37m+  Group=web[0m
+      [37m+  Type=forking[0m
+      [37m+  ExecStart=/bin/bash -c '/opt/wildfly/bin/standalone.sh -b 192.168.10.3 &'[0m
+      [37m+[0m
+      [37m+  [Install][0m
+      [37m+  WantedBy=multi-user.target[0m
+      [32m- change mode from '' to '0644'[0m
+      [32m- change owner from '' to 'root'[0m
+      [32m- change group from '' to 'root'[0m
+[0m    [32m- creating unit: jboss.service[0m
+[0mRecipe: task1_jboss::default[0m
+  * systemd_unit[jboss.service] action enable
+    [32m- enabling unit: jboss.service[0m
+[0m  * systemd_unit[jboss.service] action start
+    [32m- starting unit: jboss.service[0m
+[0m  * remote_file[/opt/wildfly/standalone/deployments/sample.war] action create_if_missing
+    [32m - Progress: 100%[0m
+    [32m- create new file /opt/wildfly/standalone/deployments/sample.war[0m
+    [32m- update content in file /opt/wildfly/standalone/deployments/sample.war from none to 89b33c[0m
+    [37m(new content is binary, diff output suppressed)[0m
+    [32m- change owner from '' to 'web'[0m
+    [32m- change group from '' to 'web'[0m
+[0m[0m
+Running handlers:[0m
+Running handlers complete
+[0mChef Client finished, 12/13 resources updated in 31 seconds[0m

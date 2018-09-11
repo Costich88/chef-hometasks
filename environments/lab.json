@@ -1,0 +1,21 @@
+{
+    "name": "lab",
+    "description": "This is a lab environment defined as JSON",
+    "chef_type": "environment",
+    "json_class": "Chef::Environment",
+    "default_attributes": {
+        "nginx": {
+          "port": "80"},
+        "jboss": { 
+          "port": "8080",
+          "path": "test"},
+        "repositoryid": "nginx-1.14.0"
+    },
+    "override_attributes": {
+        
+    },
+    "cookbook_versions": {
+        "task2_nginx": "= 0.1.0",
+        "task2_jboss": "= 0.1.0"
+    }
+}
