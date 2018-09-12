@@ -63,10 +63,9 @@ systemd_unit 'jboss.service' do
   action [ :create, :enable, :start ]
 end
 
-remote_file '/opt/wildfly/standalone/deployments/sample.war' do
-  source "https://tomcat.apache.org/tomcat-7.0-doc/appdev/sample/sample.war"
-  owner node['jboss']['jboss_user']
-  group node['jboss']['jboss_group']
-  show_progress true
-  action :create_if_missing
+app_deploy 'sample_app' do
+  link "https://tomcat.apache.org/tomcat-7.0-doc/appdev/sample/sample.war" 
+  file 'sample.war'
+  path "/opt/wildfly/standalone/deployments/"
+  action :deploy
 end
